@@ -1,0 +1,87 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>React Tutorial</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.1.0/react-dom.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/remarkable/1.6.2/remarkable.min.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="text/babel">
+      var TodoForm = React.createClass({
+        getInitialState: function() {
+          return {todoInput: ''}
+        },
+        changeInput: function(event) {
+          this.setState({todoInput: event.target.value})
+        },
+        handleSubmit: function(event) {
+          event.preventDefault();
+          var newTodo = this.state.todoInput
+          var oldTodoList = this.props.todos
+          oldTodoList.push(newTodo)
+          this.props.addTodo(oldTodoList)
+          this.setState({todoInput: ''})
+        },
+        render: function() {
+          return (
+            <form>
+              <input onChange={this.changeInput} value={this.state.todoInput} type="text" placeholder="Enter Todo"/>
+              <button onClick={this.handleSubmit}>Enter</button>
+            </form>
+          )
+        }
+      })
+
+      var TodoList = React.createClass({
+        render: function() {
+          console.log('todos', this.props.todos)
+          var that = this
+          var listOfTodos = this.props.todos.reverse().map( function(elem, i) {
+            return (
+              <li key={i}>
+                {elem}
+              </li>
+              )
+          })
+          return (
+            <div>
+              ToDo List
+              <ul>
+                {listOfTodos}
+              </ul>
+            </div>
+          )
+        }
+      })
+
+      var App = React.createClass({
+        getInitialState: function() {
+          return {todos: []}
+        },
+        updateTodo: function(updatedTodos) {
+          this.setState({todos: updatedTodos})
+        },
+        render: function() {
+          return (
+            <div>
+              <TodoForm todos={this.state.todos} addTodo={this.updateTodo} />
+              <TodoList todos={this.state.todos} />
+            </div>
+          )
+        }
+      })
+
+
+      ReactDOM.render(
+        <App />,
+        document.getElementById('app')
+      )
+    </script>
+  </body>
+</html>
