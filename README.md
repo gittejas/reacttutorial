@@ -7,3 +7,7 @@ react:
 flux:
 - https://egghead.io/courses/getting-started-with-redux
 - http://sahatyalkabov.com/create-a-character-voting-app-using-react-nodejs-mongodb-and-socketio/
+
+
+email me:
+w.zachary.lee@gmail.com
